@@ -40,31 +40,31 @@ def classify(frame, face_detector, model):
     return frame
 
 
-def main():
-    cap = cv2.VideoCapture(0)
+# def main():
+#     cap = cv2.VideoCapture(0)
 
-    # Load Haarcascade File
-    face_detector = cv2.CascadeClassifier("haarcascades/haarcascade_frontalface_default.xml")
+#     # Load Haarcascade File
+#     face_detector = cv2.CascadeClassifier("haarcascades/haarcascade_frontalface_default.xml")
 
-    # Load the Model and Weights
-    model = model_from_json(open("ml_folder/facial_expression_model_structure.json", "r").read())
-    model.load_weights('ml_folder/facial_expression_model_weights.h5')
+#     # Load the Model and Weights
+#     model = model_from_json(open("ml_folder/facial_expression_model_structure.json", "r").read())
+#     model.load_weights('ml_folder/facial_expression_model_weights.h5')
 
-    while(True):
-        # Capture frame-by-frame
-        ret, frame = cap.read()
+#     while(True):
+#         # Capture frame-by-frame
+#         ret, frame = cap.read()
 
-        op_frame = classify(frame, face_detector, model)
+#         op_frame = classify(frame, face_detector, model)
 
-        # Display the resulting frame
-        cv2.imshow('frame', op_frame)
-        # yield op_frame
+#         # Display the resulting frame
+#         cv2.imshow('frame', op_frame)
+#         # yield op_frame
 
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
+#         if cv2.waitKey(1) & 0xFF == ord('q'):
+#             break
 
-    # When everything done, release the capture
-    cap.release()
-    cv2.destroyAllWindows()
+#     # When everything done, release the capture
+#     cap.release()
+#     cv2.destroyAllWindows()
 
-main()
+# main()
