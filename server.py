@@ -1,28 +1,41 @@
 #!/usr/bin/env python
-from flask import Flask, render_template, Response
+import cv2
+import json
+import numpy as np
+import classifier
 
-from flask_socketio import SocketIO
-
-from camera import VideoCamera
+from flask import Flask, render_template, Response, request
+from keras.models import model_from_json
 
 app = Flask(__name__)
-socketio = SocketIO(app)
 
 @app.route('/')
 def index():
     return render_template('index.html')
 
-def gen(camera):
-    while True:
-        frame = camera.get_frame()
+@app.route('/uploade', methods=['POST', 'GET'])
+def upload_file():
+    if request.method == 'POST':
+        # f.save("somefile.jpeg")
+        # f = request.files['file']
 
-        yield (b'--frame\r\n'
-               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+        f = request.files['file'].read()
+        npimg = np.fromstring(f, np.uint8)
+        img = cv2.imdecode(npimg, cv2.IMREAD_GRAYSCALE)
+        face_properties = classifier.classify(img, face_detector, model)
 
-@app.route('/video_feed')
-def video_feed():
-    return Response(gen(VideoCamera()),
-                    mimetype='multipart/x-mixed-replace; boundary=frame')
+        return json.dumps(face_properties)
+
 
 if __name__ == '__main__':
-    socketio.run(app) # app.run(host='localhost', debug=True)
+        
+    # Load Haarcascade File
+    face_detector = cv2.CascadeClassifier("haarcascades/haarcascade_frontalface_default.xml")
+
+    # Load the Model and Weights
+    model = model_from_json(open("ml_folder/facial_expression_model_structure.json", "r").read())
+    model.load_weights('ml_folder/facial_expression_model_weights.h5')
+    model._make_predict_function()
+
+    # Run the flask app
+    app.run(host='localhost', debug=True)

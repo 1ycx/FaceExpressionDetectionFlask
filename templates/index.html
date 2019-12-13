@@ -3,19 +3,21 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Display Webcam Stream</title>
+    <title>Facial Expression Detection</title>
 
     <style>
+        h1 {
+            text-align: center;
+        }
+
         #container {
             margin: 0px auto;
-            width: 500px;
-            height: 375px;
+            width: 640px;
+            height: 480px;
             border: 10px #333 solid;
         }
 
         #videoElement {
-            width: 500px;
-            height: 375px;
             background-color: #666;
         }
     </style>
@@ -23,28 +25,105 @@
 </head>
 
 <body>
-    <!-- <div id="container">
+
+    <h1>Facial Expression Detection</h1>
+
+    <div id="container">
         <video autoplay="true" id="videoElement">
 
         </video>
-    </div> -->
-
-        <h1>Video Streaming Demonstration</h1>
-        <a href="/video_feed">Link</a>
+    </div>
+    
     <script>
-        var video = document.querySelector("#videoElement");
 
-        // if (navigator.mediaDevices.getUserMedia) {
-        //     navigator.mediaDevices.getUserMedia({ video: true })
-        //         .then(function (stream) {
-        //             video.srcObject = stream;
-        //         })
-        //         .catch(function (err0r) {
-        //             console.log("Something went wrong!");
-        //         });
-        // }
-
+        var reference = "https://webrtchacks.com/webrtc-cv-tensorflow/";
         
+        var video = null;
+        var container = null;
+        var drawCanvas = null;
+        var drawCtx = null;
+
+        $(document).ready(function () {
+            video = document.querySelector("#videoElement");
+            container = document.querySelector("#container");
+            
+            drawCanvas = document.createElement('canvas');
+            document.body.appendChild(drawCanvas);
+            drawCtx = drawCanvas.getContext("2d");
+
+            
+
+            if (navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+                    .then(function (stream) {
+
+                        // container.style.width = video.videoWidth;
+                        // container.style.height = video.videoHeight;
+
+                        video.srcObject = stream;
+                        setTimeout(grab, 40);
+
+                        drawCanvas.width = video.videoWidth;
+                        drawCanvas.height = video.videoHeight;
+ 
+                        drawCtx.lineWidth = "4";
+                        drawCtx.strokeStyle = "cyan";
+                        drawCtx.font = "20px Verdana";
+                        drawCtx.fillStyle = "cyan";
+                    })
+                    .catch(function (error) {
+                        console.log("Something went wrong!" + error);
+                    });
+            }
+        });
+
+        function grab() {
+            var canvas = document.createElement("canvas");
+            canvas.width = 640;
+            canvas.height = 480;
+            var context = canvas.getContext('2d');
+            context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight, 0, 0, 640, 480);
+            canvas.toBlob(upload, 'image/jpeg');
+        }
+
+        function upload(blob) {
+            var fd = new FormData();
+            fd.append('file', blob);
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/uploade', true);
+            xhr.onload = function() {
+                if (this.status == 200) {
+                    objects = JSON.parse(this.response); console.log(objects);
+
+                    drawBoxes(objects);
+                    
+                    setTimeout(grab, 40);
+                }
+            }
+            xhr.send(fd);
+        }
+
+        function drawBoxes(objects) {
+
+            // drawCtx.clearRect(0, 0, 640, 480);
+            
+            objects.forEach(object => {
+                let x = object.x * drawCanvas.width;
+                let y = object.y * drawCanvas.height;
+                let width = (object.width * drawCanvas.width) - x;
+                let height = (object.height * drawCanvas.height) - y;
+
+                //flip the x axis if local video is mirrored
+                // if (mirror){
+                //     x = drawCanvas.width - (x + width)
+                // }
+
+                drawCtx.fillText(object.label + " - " + Math.round(object.score * 100, 1) + "%", x + 5, y + 20);
+                drawCtx.strokeRect(x, y, width, height);
+
+                });
+        }
+
     </script>
 </body>
 
