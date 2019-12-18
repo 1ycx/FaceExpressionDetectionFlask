@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import cv2
-import json
+import json 
 import numpy as np
 import classifier
 
