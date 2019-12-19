@@ -1,4 +1,4 @@
-# Emotion Detection Using Flask
+# Expression Detection Using Flask
 
 ## Project Plan
 
