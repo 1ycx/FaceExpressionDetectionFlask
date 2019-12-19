@@ -90,8 +90,8 @@ function stopCamera() {
 
 function downloadFrame() {
   var link = document.createElement('a');
-  link.download = 'filename.png';
-  link.href = document.getElementById('myCanvas').toDataURL("image/jpeg", 1)
+  link.download = 'frame.jpeg';
+  link.href = document.getElementById('myCanvas').toDataURL("image/jpeg", 1);
   link.click();
 }
 
