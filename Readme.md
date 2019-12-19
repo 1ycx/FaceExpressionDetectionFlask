@@ -10,7 +10,7 @@
 - [x] Build flask prototype.
 - [x] Make sure the flask app is running properly locally.
 - [x] Write client side javascript to take frames from the video to send to the server for detection.
-- [x] Handle the response and draw on canvas proper bounding boxes.
+- [x] Handle the server response and draw on canvas proper bounding boxes.
 - [ ] Deploy the flask app online for initial testing.
 - [ ] Find & Integrate Text Mood Detection model.
 - [ ] Design a Good looking UI.
