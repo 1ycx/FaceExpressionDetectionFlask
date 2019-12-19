@@ -3,9 +3,11 @@
 ## Project Plan
 
 - [x] Find a proper Face Expression detection model.
+- [x] Take live video from webcam with OpenCV.
+- [x] Use OpenCV haarcascades for face detection.
+- [x] Return prediction of the detected face image.
 - [x] Integrate the model with the program.
-- [x] Use OpenCV for earlier testing.
-- [x] Understand flask basics.
+- [x] Build flask prototype.
 - [x] Make sure the flask app is running properly locally.
 - [x] Write client side javascript to take frames from the video to send to the server for detection.
 - [x] Handle the response and draw on canvas proper bounding boxes.
