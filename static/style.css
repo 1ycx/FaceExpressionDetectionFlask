@@ -1,0 +1,46 @@
+h1 {
+    text-align: center;
+}
+
+#container {
+    margin: 0px auto;
+    width: 640px;
+    padding: 5px;
+    border: 10px #333 solid;
+    overflow: auto;
+}
+
+form {
+    margin: auto;
+}
+
+#videoElement {
+    background-color: #666;
+    height: 480px;
+    width: 640px;
+}
+
+body {
+    font-family: "Open Sans";
+    margin: auto;
+}
+
+fieldset {
+    padding: 20px;
+    display: inline-block;
+    margin: auto;
+}
+
+form div {
+    margin: auto;
+}
+
+input[type="radio"] {
+    margin-left: 20px;
+    border: 1px solid #888;
+}
+
+input[type="button"] {
+    margin: auto;
+    text-align: center;
+}

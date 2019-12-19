@@ -4,199 +4,38 @@
 <head>
   <meta charset="utf-8" />
   <title>Facial Expression Detection</title>
-
-  <style>
-    h1 {
-      text-align: center;
-    }
-
-    #container {
-      margin: 0px auto;
-      width: 640px;
-      padding: 5px;
-      border: 10px #333 solid;
-      overflow: auto;
-    }
-
-    form {
-      margin: auto;
-    }
-
-    #videoElement {
-      background-color: #666;
-      height: 480px;
-      width: 640px;
-    }
-
-    body {
-      font-family: "Open Sans";
-    }
-
-    fieldset {
-      padding: 20px;
-      display: inline-block;
-      margin: auto;
-    }
-
-    form div {
-      margin: auto;
-    }
-
-    input[type="radio"] {
-      margin-left: 20px;
-      border: 1px solid #888;
-    }
-
-    input[type="button"] {
-      margin: auto;
-      text-align: center;
-    }
-  </style>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+
 </head>
 
 <body>
   <h1>Facial Expression Detection</h1>
-
   <div id="container">
     <form name="form">
       <div>
         <fieldset>
           <legend>Select Device</legend>
-          <label><input type="radio" name="device" value="PC" onclick="checkCamera()" checked>PC</label>
-          <label><input type="radio" name="device" value="Mobile" onclick="checkCamera()">Mobile</label </div> <div>
+          <label><input type="radio" name="device" id=1 value="PC" onclick="checkCamera()" checked>PC</label>
+          <label><input type="radio" name="device" id=2 value="Mobile" onclick="checkCamera()">Mobile</label>
         </fieldset>
         <fieldset>
           <legend>Select Camera</legend>
-          <label><input type="radio" name="camera" id=1 disabled>Front Camera</label>
-          <label><input type="radio" name="camera" id=2 disabled>Rear Camera</label>
+          <label><input type="radio" name="camera" id=3 disabled onchange="flipCamera()">Front Camera</label>
+          <label><input type="radio" name="camera" id=4 disabled onchange="flipCamera()">Rear Camera</label>
         </fieldset>
         <br>
         <br>
-        <input type="button" value="Start Camera" onclick="startCamera()">
+        <input type="button" id=5 value="Start Camera" onclick="startCamera()">
+        <input type="button" id=6 value="Stop Camera" onclick="stopCamera()">
       </div>
     </form>
     <br>
-    <video controls id="videoElement"></video>
-    <br />
+    <video controls id="videoElement" onpause=""></video>
+    <br>
     <canvas id="myCanvas"></canvas>
   </div>
-
-  <script>
-    var reference = "https://webrtchacks.com/webrtc-cv-tensorflow/";
-
-    var video = null;
-    var streamRef = null;
-    var container = null;
-    var imageCanvas = null;
-    var imageCtx = null;
-    var drawCanvas = null;
-    var drawCtx = null;
-
-    function checkCamera() {
-      if (form.device.value == "PC") { 
-        document.getElementById(1).disabled = true; 
-        document.getElementById(2).disabled = true; 
-      }
-      else if (form.device.value == "Mobile") { 
-        document.getElementById(1).disabled = false; 
-        document.getElementById(2).disabled = false; 
-      }
-    }
-    
-    document.onreadystatechange = () => {
-      if (document.readyState === "complete") {
-
-        if (navigator.mediaDevices.getUserMedia) {
-          navigator.mediaDevices
-            .getUserMedia({ video: true, audio: false })
-            .then(function (stream) {
-              // container.style.width = video.videoWidth;
-              // container.style.height = video.videoHeight;
-
-              video.srcObject = stream;
-              streamRef = stream;
-
-              setTimeout(grab, 40);
-
-              drawCanvas.width = video.videoWidth;
-              drawCanvas.height = video.videoHeight;
-
-              drawCtx.lineWidth = "4";
-              drawCtx.strokeStyle = "cyan";
-              drawCtx.font = "20px Verdana";
-              drawCtx.fillStyle = "cyan";
-            })
-            .catch(function (error) {
-              console.log("Something went wrong!" + error);
-            });
-        }
-
-        video = document.querySelector("#videoElement");
-        container = document.querySelector("#container");
-
-        drawCanvas = document.createElement("canvas");
-        document.body.appendChild(drawCanvas);
-        drawCtx = drawCanvas.getContext("2d");
-
-        imageCanvas = document.getElementById("myCanvas");
-        imageCtx = imageCanvas.getContext("2d");
-
-        imageCanvas.width = 640;
-        imageCanvas.height = 480;
-      }
-    };
-
-    function grab() {
-      // var canvas = document.createElement("canvas");
-      // var context = canvas.getContext("2d");
-      imageCtx.drawImage(
-        video,
-        0,
-        0,
-        video.videoWidth,
-        video.videoHeight,
-        0,
-        0,
-        640,
-        480
-      );
-      imageCanvas.toBlob(upload, "image/jpeg");
-    }
-
-    function upload(blob) {
-      var fd = new FormData();
-      fd.append("file", blob);
-      var xhr = new XMLHttpRequest();
-      xhr.open("POST", "/uploade", true);
-      xhr.onload = function () {
-        if (this.status == 200) {
-          objects = JSON.parse(this.response);
-
-          drawBoxes(objects);
-
-          setTimeout(grab, 40);
-        }
-      };
-      xhr.send(fd);
-    }
-
-    function drawBoxes(objects) {
-      drawCtx.clearRect(0, 0, 640, 480);
-      console.log("reached in objects", objects);
-      objects.forEach(object => {
-        let label = object.label;
-        let score = Number(object.score);
-        let x = Number(object.x) * drawCanvas.width;
-        let y = Number(object.y) * drawCanvas.height;
-        let width = Number(object.width) * drawCanvas.width - x;
-        let height = Number(object.height) * drawCanvas.height - y;
-
-        drawCtx.fillText(label + " - " + score * 100 + "%", x + 5, y + 20);
-        drawCtx.strokeRect(x, y, width, height);
-      });
-    }
-  </script>
+  <script src="{{ url_for('static', filename='index.js') }}"></script>
 </body>
 
 </html>
