@@ -88,15 +88,21 @@ function stopCamera() {
   }
 }
 
+function downloadFrame() {
+  var link = document.createElement('a');
+  link.download = 'filename.png';
+  link.href = document.getElementById('myCanvas').toDataURL("image/jpeg", 1)
+  link.click();
+}
+
 document.onreadystatechange = () => {
   if (document.readyState === "complete") {
 
     video = document.querySelector("#videoElement");
-    video.onpause
-  
+
     imageCanvas = document.getElementById("myCanvas");
     imageCtx = imageCanvas.getContext("2d");
-  
+
     imageCanvas.width = 640;
     imageCanvas.height = 480;
 

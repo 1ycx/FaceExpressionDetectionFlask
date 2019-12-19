@@ -36,4 +36,4 @@
     * Linux: `python3 server.py`
 
 ## Issues
-Any problems ? Feel free to open a new issue.
+Any problems ? Feel free to open up a new issue.
