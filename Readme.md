@@ -2,17 +2,17 @@
 
 ## Project Plan
 
-[x] Find a proper Face Expression detection model
-[x] Integrate the model with the program
-[x] Use OpenCV for earlier testing
-[x] Understand flask basics
-[x] Make sure the flask app is running properly locally
-[x] Write client side javascript to take frames from the video to send to the server for detection
-[x] Handle the response and draw on canvas proper bounding boxes.
-[ ] Deploy the flask app online for initial testing.
-[ ] Find & Integrate Text Mood Detection model.
-[ ] Design a Good looking UI.
-[ ] Maybe write some testcases ? IDK.
+- [x] Find a proper Face Expression detection model.
+- [x] Integrate the model with the program.
+- [x] Use OpenCV for earlier testing.
+- [x] Understand flask basics.
+- [x] Make sure the flask app is running properly locally.
+- [x] Write client side javascript to take frames from the video to send to the server for detection.
+- [x] Handle the response and draw on canvas proper bounding boxes.
+- [ ] Deploy the flask app online for initial testing.
+- [ ] Find & Integrate Text Mood Detection model.
+- [ ] Design a Good looking UI.
+- [ ] Maybe write some testcases ? IDK.
 
 ## Setup
 
