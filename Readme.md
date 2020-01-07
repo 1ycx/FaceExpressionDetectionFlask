@@ -11,8 +11,9 @@
 - [x] Make sure the flask app is running properly locally.
 - [x] Write client side javascript to take frames from the video to send to the server for detection.
 - [x] Handle the server response and draw on canvas proper bounding boxes.
-- [ ] Deploy the flask app online for initial testing.
-- [ ] Find & Integrate Text Mood Detection model.
+- [x] Deploy the flask app online for initial testing. (Heroku, done)
+    - [ ] The app works on destop but not on mobile devices. Check this.
+- [ ] Find & Integrate Text Mood/Emotion Detection model.
 - [ ] Design a Good looking UI.
 - [ ] Maybe write some testcases ? IDK.
 
@@ -36,6 +37,21 @@
 * To run, 
     * Windows: `python server.py`
     * Linux: `python3 server.py`
+
+## Deployment to heroku
+
+* Login and create a new app.
+* Connect your github repo to the app, select a branch and enable Automatic deployments.
+* Add a buildpack to install required libraries for Open CV.
+```bash
+    (env) kogam22@HOME-PC:~/code/FaceExpressionDetectionFlask$ heroku buildpacks:add --index 1 heroku-community/apt -a flask-face
+    Buildpack added. Next release on flask-face will use:
+    1. heroku-community/apt
+    2. heroku/python
+    Run git push heroku master to create a new release using these buildpacks.
+```
+* Update your branch to create new release.
+
 
 ## Issues
 Any problems ? Feel free to open up a new issue.
