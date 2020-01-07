@@ -1,4 +1,4 @@
-var reference = "https://webrtchacks.com/webrtc-cv-tensorflow/";
+// Note "https://webrtchacks.com/webrtc-cv-tensorflow/";
 
 var video = null;
 var streamRef = null;
