@@ -117,8 +117,8 @@ document.onreadystatechange = () => {
     imageCanvas = document.getElementById("myCanvas");
     imageCtx = imageCanvas.getContext("2d");
 
-    imageCanvas.width = 480;
-    imageCanvas.height = 360;
+    // imageCanvas.width = 640;
+    // imageCanvas.height = 480;
 
     imageCtx.lineWidth = "4";
     imageCtx.strokeStyle = "blue";
@@ -137,8 +137,8 @@ function grab() {
     video.videoHeight,
     0,
     0,
-    480,
-    360
+    video.videoWidth,
+    video.videoHeight
   );
   imageCanvas.toBlob(upload, "image/jpeg");
 }

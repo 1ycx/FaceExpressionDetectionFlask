@@ -4,7 +4,7 @@ h1 {
 
 #container {
     margin: 0px auto;
-    width: 480px;
+    width: 640px;
     padding: 5px;
     border: 10px #333 solid;
     overflow: auto;
@@ -16,13 +16,8 @@ form {
 
 #videoElement {
     background-color: #666;
-    width: 480px !important;
-    height: 360px !important;
-}
-
-#myCanvas {
-    width: 480px !important;
-    height: 360px !important;;
+    width: 640px;
+    height: 480px;
 }
 
 body {
