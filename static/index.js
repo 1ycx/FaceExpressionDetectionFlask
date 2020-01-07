@@ -44,6 +44,8 @@ function switchRadio(action) {
   else if (action == "stop") {
     document.getElementById(1).disabled = false;
     document.getElementById(2).disabled = false;
+
+    document.getElementById(1).checked = true;
   }
 }
 
@@ -64,13 +66,18 @@ function startCamera() {
         streamRef = stream;
 
         switchRadio("start");
-        timeOut1 = setTimeout(grab, 40);
+        timeOut1 = setTimeout(grab, 100);
       })
       .catch(function (err) {
         alert("Start Stream: Stream not started.");
         console.log("Start Stream:", err.name + ": " + err.message);
       });
   }
+}
+
+function stopTimeout() {
+  clearTimeout(timeOut1);
+  clearTimeout(timeOut2);
 }
 
 function stopCamera() {
@@ -80,9 +87,11 @@ function stopCamera() {
   }
   // Check stream
   else if (streamRef.active) {
-    streamRef.getTracks()[0].stop();
     video.pause();
+    streamRef.getTracks()[0].stop();
     video.srcObject = null;
+
+    stopTimeout();
 
     switchRadio("stop");
   }
@@ -107,7 +116,7 @@ document.onreadystatechange = () => {
     imageCanvas.height = 480;
 
     imageCtx.lineWidth = "4";
-    imageCtx.strokeStyle = "cyan";
+    imageCtx.strokeStyle = "blue";
     imageCtx.font = "20px Verdana";
     imageCtx.fillStyle = "red";
 
@@ -140,7 +149,7 @@ function upload(blob) {
 
       drawBoxes(objects);
 
-      timeOut2 = setTimeout(grab, 40);
+      timeOut2 = setTimeout(grab, 100);
     }
   };
   xhr.send(fd);
