@@ -41,6 +41,10 @@ pip-delete-this-directory.txt
 # Uploaded file
 somefile.jpeg
 
+# Dockerfile and folder
+Dockerfile
+app/
+
 # Unit test / coverage reports
 htmlcov/
 .tox/
