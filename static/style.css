@@ -16,8 +16,13 @@ form {
 
 #videoElement {
     background-color: #666;
-    height: 480px;
-    width: 640px;
+    width: 480px !important;
+    height: auto !important;
+}
+
+#myCanvas {
+    width: 480px !important;
+    height: 360px !important;;
 }
 
 body {

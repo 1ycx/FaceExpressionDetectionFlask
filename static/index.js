@@ -13,6 +13,10 @@ var timeOut2 = null;
 var front = false;
 var constraints = null;
 
+// Not used currently
+var height = null;
+var width = null;
+
 function flipCamera() {
   front = !front;
   constraints = { video: { facingMode: (front ? "user" : "environment") }, audio: false };
@@ -64,9 +68,10 @@ function startCamera() {
       .then(function (stream) {
         video.srcObject = stream;
         streamRef = stream;
+        video.play();
 
         switchRadio("start");
-        timeOut1 = setTimeout(grab, 100);
+        timeOut1 = setTimeout(grab, 40);
       })
       .catch(function (err) {
         alert("Start Stream: Stream not started.");
@@ -112,8 +117,8 @@ document.onreadystatechange = () => {
     imageCanvas = document.getElementById("myCanvas");
     imageCtx = imageCanvas.getContext("2d");
 
-    imageCanvas.width = 640;
-    imageCanvas.height = 480;
+    imageCanvas.width = 480;
+    imageCanvas.height = 360;
 
     imageCtx.lineWidth = "4";
     imageCtx.strokeStyle = "blue";
@@ -132,8 +137,8 @@ function grab() {
     video.videoHeight,
     0,
     0,
-    640,
-    480
+    480,
+    360
   );
   imageCanvas.toBlob(upload, "image/jpeg");
 }
@@ -149,7 +154,7 @@ function upload(blob) {
 
       drawBoxes(objects);
 
-      timeOut2 = setTimeout(grab, 100);
+      timeOut2 = setTimeout(grab, 40);
     }
   };
   xhr.send(fd);
@@ -157,7 +162,6 @@ function upload(blob) {
 
 function drawBoxes(objects) {
   // imageCtx.clearRect(0, 0, 640, 480);
-  console.log("reached in objects", objects);
   objects.forEach(object => {
     let label = object.label;
     let score = Number(object.score);

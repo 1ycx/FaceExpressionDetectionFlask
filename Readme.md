@@ -40,15 +40,15 @@
 
 ## Deployment to heroku
 
-* Login and create a new app.
+* Create a new app.
 * Connect your github repo to the app, select a branch and enable Automatic deployments.
 * Add a buildpack to install required libraries for Open CV.
 ```bash
-    (env) kogam22@HOME-PC:~/code/FaceExpressionDetectionFlask$ heroku buildpacks:add --index 1 heroku-community/apt -a flask-face
-    Buildpack added. Next release on flask-face will use:
-    1. heroku-community/apt
-    2. heroku/python
-    Run git push heroku master to create a new release using these buildpacks.
+(env) kogam22@HOME-PC:~/code/FaceExpressionDetectionFlask$ heroku buildpacks:add --index 1 heroku-community/apt -a flask-face
+Buildpack added. Next release on flask-face will use:
+1. heroku-community/apt
+2. heroku/python
+Run git push heroku master to create a new release using these buildpacks.
 ```
 * Update your branch to create new release.
 
