@@ -31,7 +31,7 @@ def upload_file():
 if __name__ == '__main__':
         
     # Load Haarcascade File
-    face_detector = cv2.CascadeClassifier("haarcascades/haarcascade_frontalface_default.xml")
+    face_detector = cv2.CascadeClassifier("ml_folder/haarcascade_frontalface_default.xml")
 
     # Load the Model and Weights
     model = model_from_json(open("ml_folder/facial_expression_model_structure.json", "r").read())
