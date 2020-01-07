@@ -52,7 +52,7 @@ def classify(frame, face_detector, model):
             
             cv2.putText(frame, label + " : " + str(confidence), (int(x), int(y)), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
         
-    cv2.imwrite("somefile.jpeg", frame)
+    # cv2.imwrite("somefile.jpeg", frame)
 
     # output_json = json.dumps([face.__dict__ for face in face_prop])
     return face_prop

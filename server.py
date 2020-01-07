@@ -40,4 +40,4 @@ def upload_file():
 if __name__ == '__main__':
         
     # Run the flask app
-    app.run(host='localhost', debug=True)
+    app.run()
