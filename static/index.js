@@ -99,6 +99,11 @@ function stopCamera() {
     stopTimeout();
 
     switchRadio("stop");
+
+    // Reset canvas after stoppong cam
+    // imageCtx.fillStyle = "white";
+    // imageCtx.fillRect(0, 0, imageCanvas.width, imageCanvas.height);
+
   }
 }
 
@@ -117,8 +122,8 @@ document.onreadystatechange = () => {
     imageCanvas = document.getElementById("myCanvas");
     imageCtx = imageCanvas.getContext("2d");
 
-    // imageCanvas.width = 640;
-    // imageCanvas.height = 480;
+    imageCanvas.width = 640;
+    imageCanvas.height = 480;
 
     imageCtx.lineWidth = "4";
     imageCtx.strokeStyle = "blue";
@@ -135,10 +140,10 @@ function grab() {
     0,
     video.videoWidth,
     video.videoHeight,
-    0,
+    (640 - video.videoWidth)/2,
     0,
     video.videoWidth,
-    video.videoHeight
+    video.videoHeight,
   );
   imageCanvas.toBlob(upload, "image/jpeg");
 }

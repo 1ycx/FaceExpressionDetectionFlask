@@ -20,6 +20,10 @@ form {
     height: 480px;
 }
 
+#myCanvas {
+    margin: auto;
+}
+
 body {
     font-family: "Open Sans";
     margin: auto;
