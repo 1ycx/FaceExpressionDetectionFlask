@@ -10,6 +10,15 @@ from keras.models import model_from_json
 app = Flask(__name__)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
+# Load Haarcascade File
+face_detector = cv2.CascadeClassifier("ml_folder/haarcascade_frontalface_default.xml")
+
+# Load the Model and Weights
+model = model_from_json(open("ml_folder/facial_expression_model_structure.json", "r").read())
+model.load_weights('ml_folder/facial_expression_model_weights.h5')
+model._make_predict_function()
+
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -30,13 +39,5 @@ def upload_file():
 
 if __name__ == '__main__':
         
-    # Load Haarcascade File
-    face_detector = cv2.CascadeClassifier("ml_folder/haarcascade_frontalface_default.xml")
-
-    # Load the Model and Weights
-    model = model_from_json(open("ml_folder/facial_expression_model_structure.json", "r").read())
-    model.load_weights('ml_folder/facial_expression_model_weights.h5')
-    model._make_predict_function()
-
     # Run the flask app
     app.run(host='localhost', debug=True)
