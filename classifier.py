@@ -39,9 +39,11 @@ def classify(frame, face_detector, model):
 
             confidence = np.max(predictions)  # Get the confidence of that label
 
+            confidence *= 100 # Multiple probability by 100
+
             detect = dict()
             detect['label'] = label
-            detect['score'] = str(confidence)
+            detect['score'] = str(confidence).split(".")[0]
             detect['x'] = str(x)
             detect['y'] = str(y)
             detect['width'] = str(w)
@@ -52,7 +54,7 @@ def classify(frame, face_detector, model):
             
             cv2.putText(frame, label + " : " + str(confidence), (int(x), int(y)), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
         
-    # cv2.imwrite("somefile.jpeg", frame)
+    cv2.imwrite("somefile.jpeg", frame)
 
     # output_json = json.dumps([face.__dict__ for face in face_prop])
     return face_prop

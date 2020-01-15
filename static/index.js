@@ -3,9 +3,11 @@
 var video = null;
 var streamRef = null;
 
-var imageCanvas = null;
-var imageCtx = null;
+var drawCanvas = null;
+var drawCtx = null;
 
+var captureCanvas = null;
+var captureCtx = null;
 
 var timeOut1 = null;
 var timeOut2 = null;
@@ -13,9 +15,7 @@ var timeOut2 = null;
 var front = false;
 var constraints = null;
 
-// Not used currently
-var height = null;
-var width = null;
+var adjustedCanvas = false;
 
 function flipCamera() {
   front = !front;
@@ -50,6 +50,24 @@ function switchRadio(action) {
     document.getElementById(2).disabled = false;
 
     document.getElementById(1).checked = true;
+  }
+}
+
+function adjustCanvas(bool) {
+
+  if (!adjustedCanvas || bool) {
+    drawCanvas.width = video.videoWidth;
+    drawCanvas.height = video.videoHeight;
+    
+    captureCanvas.width = video.videoWidth;
+    captureCanvas.height = video.videoHeight;
+
+    drawCtx.lineWidth = "5";
+    drawCtx.strokeStyle = "blue";
+    drawCtx.font = "20px Verdana";
+    drawCtx.fillStyle = "red";
+
+    adjustedCanvas = true;
   }
 }
 
@@ -101,8 +119,8 @@ function stopCamera() {
     switchRadio("stop");
 
     // Reset canvas after stoppong cam
-    // imageCtx.fillStyle = "white";
-    // imageCtx.fillRect(0, 0, imageCanvas.width, imageCanvas.height);
+    // drawCtx.fillStyle = "white";
+    // drawCtx.fillRect(0, 0, drawCanvas.width, drawCanvas.height);
 
   }
 }
@@ -119,33 +137,40 @@ document.onreadystatechange = () => {
 
     video = document.querySelector("#videoElement");
 
-    imageCanvas = document.getElementById("myCanvas");
-    imageCtx = imageCanvas.getContext("2d");
+    // canvas = document.getElementById("canvas");
+    // ctx = canvas.getContext("2d");
 
-    imageCanvas.width = 640;
-    imageCanvas.height = 480;
+    captureCanvas = document.getElementById("captureCanvas");
+    captureCtx = captureCanvas.getContext("2d");
 
-    imageCtx.lineWidth = "4";
-    imageCtx.strokeStyle = "blue";
-    imageCtx.font = "20px Verdana";
-    imageCtx.fillStyle = "red";
+    drawCanvas = document.getElementById("drawCanvas");
+    drawCtx = drawCanvas.getContext("2d");
+
+    // drawCanvas.width = 640;
+    // drawCanvas.height = 480;
+
+    drawCtx.lineWidth = "5";
+    drawCtx.strokeStyle = "blue";
+    drawCtx.font = "20px Verdana";
+    drawCtx.fillStyle = "red";
 
   }
 };
 
 function grab() {
-  imageCtx.drawImage(
+  captureCtx.drawImage(
     video,
     0,
     0,
     video.videoWidth,
     video.videoHeight,
-    (640 - video.videoWidth)/2,
+    0,
     0,
     video.videoWidth,
     video.videoHeight,
   );
-  imageCanvas.toBlob(upload, "image/jpeg");
+  console.log(captureCanvas.width, captureCanvas.height);
+  captureCanvas.toBlob(upload, "image/jpeg");
 }
 
 function upload(blob) {
@@ -166,7 +191,7 @@ function upload(blob) {
 }
 
 function drawBoxes(objects) {
-  // imageCtx.clearRect(0, 0, 640, 480);
+  // drawCtx.clearRect(0, 0, 640, 480);
   objects.forEach(object => {
     let label = object.label;
     let score = Number(object.score);
@@ -174,8 +199,11 @@ function drawBoxes(objects) {
     let y = Number(object.y);
     let width = Number(object.width);
     let height = Number(object.height);
+    
+    // To refresh the canvas
+    drawCanvas.width = drawCanvas.width; 
 
-    imageCtx.fillText(label + " - " + score * 100 + "%", x + 5, y + 20);
-    imageCtx.strokeRect(x, y, width, height);
+    drawCtx.fillText(label + " - " + score, x + 5, y + 20);
+    drawCtx.strokeRect(x, y, width, height);
   });
 }

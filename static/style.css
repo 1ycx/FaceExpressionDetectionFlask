@@ -1,3 +1,8 @@
+body {
+    font-family: "Open Sans";
+    margin: auto;
+}
+
 h1 {
     text-align: center;
 }
@@ -5,6 +10,7 @@ h1 {
 #container {
     margin: 0px auto;
     width: 640px;
+    height: 700px;
     padding: 5px;
     border: 10px #333 solid;
     overflow: auto;
@@ -14,28 +20,9 @@ form {
     margin: auto;
 }
 
-#videoElement {
-    background-color: #666;
-    width: 640px;
-    height: 480px;
-}
-
-#myCanvas {
-    margin: auto;
-}
-
-body {
-    font-family: "Open Sans";
-    margin: auto;
-}
-
 fieldset {
     padding: 20px;
     display: inline-block;
-    margin: auto;
-}
-
-form div {
     margin: auto;
 }
 
@@ -47,4 +34,14 @@ input[type="radio"] {
 input[type="button"] {
     margin: auto;
     text-align: center;
+}
+
+#videoElement {
+    background-color: #666;
+    width: 640px;
+    height: 480px;
+}
+
+#canvas-parent * {
+    position: absolute;
 }

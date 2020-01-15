@@ -28,12 +28,14 @@
         <br>
         <input type="button" id=5 value="Start Camera" onclick="startCamera()">
         <input type="button" id=6 value="Stop Camera" onclick="stopCamera()">
+        <input type="button" id=7 value="Adjust Canvas" onclick="adjustCanvas(true)" style="float: right;">
       </div>
-    </form>
-    <br>
-    <video contrls id="videoElement" onpause=""></video>
-    <br>
-    <canvas id="myCanvas" onclick="downloadFrame()"></canvas>
+    </form> <br>
+    <div id="canvas-parent">
+      <video contrls id="videoElement" onloadeddata="adjustCanvas()"></video>
+      <canvas id="drawCanvas"></canvas>
+    </div>
+    <canvas id="captureCanvas"></canvas>
   </div>
   <script src="{{ url_for('static', filename='index.js') }}"></script>
 </body>

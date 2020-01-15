@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 import cv2
-import json 
+import json
 import numpy as np
 import classifier
 
-from flask import Flask, render_template, Response, request
+from flask import Flask, render_template,  request
 from keras.models import model_from_json
 
 app = Flask(__name__)
@@ -23,6 +23,7 @@ model._make_predict_function()
 def index():
     return render_template('index.html')
 
+
 @app.route('/uploade', methods=['POST', 'GET'])
 def upload_file():
     if request.method == 'POST':
@@ -38,6 +39,6 @@ def upload_file():
 
 
 if __name__ == '__main__':
-        
+
     # Run the flask app
     app.run()
