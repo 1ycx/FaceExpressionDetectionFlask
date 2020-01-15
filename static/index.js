@@ -56,6 +56,9 @@ function switchRadio(action) {
 function adjustCanvas(bool) {
 
   if (!adjustedCanvas || bool) {
+    // clear canvas
+    drawCanvas.width = drawCanvas.width;
+
     drawCanvas.width = video.videoWidth;
     drawCanvas.height = video.videoHeight;
     
@@ -89,7 +92,7 @@ function startCamera() {
         video.play();
 
         switchRadio("start");
-        timeOut1 = setTimeout(grab, 40);
+        timeInterval = setInterval(grab, 60);
       })
       .catch(function (err) {
         alert("Start Stream: Stream not started.");
@@ -98,9 +101,9 @@ function startCamera() {
   }
 }
 
-function stopTimeout() {
-  clearTimeout(timeOut1);
-  clearTimeout(timeOut2);
+function stopInterval() {
+  clearInterval(timeInterval);
+  // clearTimeout(timeOut);
 }
 
 function stopCamera() {
@@ -114,14 +117,11 @@ function stopCamera() {
     streamRef.getTracks()[0].stop();
     video.srcObject = null;
 
-    stopTimeout();
+    stopInterval();
 
     switchRadio("stop");
 
-    // Reset canvas after stoppong cam
-    // drawCtx.fillStyle = "white";
-    // drawCtx.fillRect(0, 0, drawCanvas.width, drawCanvas.height);
-
+    adjustCanvas();
   }
 }
 
@@ -137,23 +137,11 @@ document.onreadystatechange = () => {
 
     video = document.querySelector("#videoElement");
 
-    // canvas = document.getElementById("canvas");
-    // ctx = canvas.getContext("2d");
-
     captureCanvas = document.getElementById("captureCanvas");
     captureCtx = captureCanvas.getContext("2d");
 
     drawCanvas = document.getElementById("drawCanvas");
     drawCtx = drawCanvas.getContext("2d");
-
-    // drawCanvas.width = 640;
-    // drawCanvas.height = 480;
-
-    drawCtx.lineWidth = "5";
-    drawCtx.strokeStyle = "blue";
-    drawCtx.font = "20px Verdana";
-    drawCtx.fillStyle = "red";
-
   }
 };
 
@@ -183,15 +171,12 @@ function upload(blob) {
       objects = JSON.parse(this.response);
 
       drawBoxes(objects);
-
-      timeOut2 = setTimeout(grab, 40);
     }
   };
   xhr.send(fd);
 }
 
 function drawBoxes(objects) {
-  // drawCtx.clearRect(0, 0, 640, 480);
   objects.forEach(object => {
     let label = object.label;
     let score = Number(object.score);
@@ -200,8 +185,7 @@ function drawBoxes(objects) {
     let width = Number(object.width);
     let height = Number(object.height);
     
-    // To refresh the canvas
-    drawCanvas.width = drawCanvas.width; 
+    adjustCanvas(true);
 
     drawCtx.fillText(label + " - " + score, x + 5, y + 20);
     drawCtx.strokeRect(x, y, width, height);

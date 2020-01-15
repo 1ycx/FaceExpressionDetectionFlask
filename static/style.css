@@ -10,7 +10,7 @@ h1 {
 #container {
     margin: 0px auto;
     width: 640px;
-    height: 700px;
+    height: 1000px;
     padding: 5px;
     border: 10px #333 solid;
     overflow: auto;
