@@ -1,5 +1,7 @@
 // Note "https://webrtchacks.com/webrtc-cv-tensorflow/";
+// lt -h https://tunnel.datahub.at --port 5000
 
+var analytElem = null;
 var video = null;
 var streamRef = null;
 
@@ -12,45 +14,60 @@ var captureCtx = null;
 var timeOut1 = null;
 var timeOut2 = null;
 
-var front = false;
+// var front = false;
 var constraints = null;
+
+var analytics = {
+  "angry": 0,
+  "disgust": 0,
+  "fear": 0,
+  "happy": 0,
+  "sad": 0,
+  "surprise": 0,
+  "neutral": 0,
+}
 
 var adjustedCanvas = false;
 
-function flipCamera() {
-  front = !front;
-  constraints = { video: { facingMode: (front ? "user" : "environment") }, audio: false };
-}
+// function flipCamera() {
+//   front = !front;
+//   constraints = { video: { facingMode: (front ? "user" : "environment") }, audio: false };
+// }
 
-function checkCamera() {
-  if (form.device.value == "PC") {
-    document.getElementById(3).disabled = true;
-    document.getElementById(4).disabled = true;
-  }
-  else if (form.device.value == "Mobile") {
-    // Enable the camera options
-    document.getElementById(3).disabled = false;
-    document.getElementById(4).disabled = false;
+// function checkCamera() {
+//   if (form.device.value == "PC") {
+//     document.getElementById(3).disabled = true;
+//     document.getElementById(4).disabled = true;
+//   }
+//   else if (form.device.value == "Mobile") {
+//     // Enable the camera options
+//     document.getElementById(3).disabled = false;
+//     document.getElementById(4).disabled = false;
 
-    // Set default to back camera
-    document.getElementById(4).checked = true;
-    front = false;
-  }
-}
+//     // Set default to back camera
+//     document.getElementById(4).checked = true;
+//     front = false;
+//   }
+// }
 
-function switchRadio(action) {
-  if (action == "start") {
-    document.getElementById(1).disabled = true;
-    document.getElementById(2).disabled = true;
-    document.getElementById(3).disabled = true;
-    document.getElementById(4).disabled = true;
-  }
-  else if (action == "stop") {
-    document.getElementById(1).disabled = false;
-    document.getElementById(2).disabled = false;
+// function switchRadio(action) {
+//   if (action == "start") {
+//     document.getElementById(1).disabled = true;
+//     document.getElementById(2).disabled = true;
+//     document.getElementById(3).disabled = true;
+//     document.getElementById(4).disabled = true;
+//   }
+//   else if (action == "stop") {
+//     document.getElementById(1).disabled = false;
+//     document.getElementById(2).disabled = false;
 
-    document.getElementById(1).checked = true;
-  }
+//     document.getElementById(1).checked = true;
+//   }
+// }
+
+function removeH2() {
+  h2 = document.getElementById("h2-2");
+  h2.remove();
 }
 
 function adjustCanvas(bool) {
@@ -91,14 +108,26 @@ function startCamera() {
         streamRef = stream;
         video.play();
 
-        switchRadio("start");
-        timeInterval = setInterval(grab, 60);
+        // switchRadio("start");
+        timeInterval = setInterval(grab, 150);
       })
       .catch(function (err) {
         alert("Start Stream: Stream not started.");
         console.log("Start Stream:", err.name + ": " + err.message);
       });
   }
+}
+
+function iterateAnalytics() {
+  
+  // var text = "";
+  for (var key in analytics) {
+    var p = document.createElement("p");
+    p.innerText = key.capitalize() + ": " + analytics[key];
+    analytElem.appendChild(p);
+    // text += ("  " + key.capitalize() + ":  " + analytics[key] + "\n")
+  }
+  return text;
 }
 
 function stopInterval() {
@@ -117,9 +146,11 @@ function stopCamera() {
     streamRef.getTracks()[0].stop();
     video.srcObject = null;
 
+    iterateAnalytics();
+
     stopInterval();
 
-    switchRadio("stop");
+    // switchRadio("stop");
 
     adjustCanvas();
   }
@@ -135,7 +166,13 @@ function downloadFrame() {
 document.onreadystatechange = () => {
   if (document.readyState === "complete") {
 
+    String.prototype.capitalize = function () {
+      return this.charAt(0).toUpperCase() + this.slice(1);
+    }
+
     video = document.querySelector("#videoElement");
+
+    analytElem = document.getElementById("analytics");
 
     captureCanvas = document.getElementById("captureCanvas");
     captureCtx = captureCanvas.getContext("2d");
@@ -184,7 +221,9 @@ function drawBoxes(objects) {
     let y = Number(object.y);
     let width = Number(object.width);
     let height = Number(object.height);
-    
+
+    analytics[label] += 1;
+
     adjustCanvas(true);
 
     drawCtx.fillText(label + " - " + score, x + 5, y + 20);

@@ -12,10 +12,20 @@
 - [x] Write client side javascript to take frames from the video to send to the server for detection.
 - [x] Handle the server response and draw on canvas proper bounding boxes.
 - [x] Deploy the flask app online for initial testing. (Heroku, done)
-    - [ ] The app works on destop but not on mobile devices. Check this.
+- [ ] A big no for mobile devices.
+- [ ] Maybe d3.js for visualization.
 - [ ] Find & Integrate Text Mood/Emotion Detection model.
 - [ ] Design a Good looking UI.
 - [ ] Maybe write some testcases ? IDK.
+
+
+## Current todo:
+
+- [ ] D3.js Implementation
+- [ ] A complete div in device is mobile.
+- [ ] Container2 adjustments
+- [ ] Fix the unlimited `['files'].read error` popping up in flask
+
 
 ## Setup
 

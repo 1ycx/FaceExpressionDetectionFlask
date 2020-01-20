@@ -3,6 +3,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# PageKite
+pagekite.py
+
 # C extensions
 *.so
 

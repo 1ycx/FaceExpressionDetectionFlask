@@ -5,37 +5,53 @@
   <meta charset="utf-8" />
   <title>Facial Expression Detection</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet"> 
   <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
 
 </head>
 
 <body>
   <h1>Facial Expression Detection</h1>
-  <div id="container">
-    <form name="form">
-      <div>
-        <fieldset>
-          <legend>Select Device</legend>
-          <label><input type="radio" name="device" id=1 value="PC" onclick="checkCamera()" checked>PC</label>
-          <label><input type="radio" name="device" id=2 value="Mobile" onclick="checkCamera()">Mobile</label>
-        </fieldset>
-        <fieldset>
-          <legend>Select Camera</legend>
-          <label><input type="radio" name="camera" id=3 disabled onchange="flipCamera()">Front Camera</label>
-          <label><input type="radio" name="camera" id=4 disabled onchange="flipCamera()">Rear Camera</label>
-        </fieldset>
-        <br>
-        <br>
-        <input type="button" id=5 value="Start Camera" onclick="startCamera()">
-        <input type="button" id=6 value="Stop Camera" onclick="stopCamera()">
-        <input type="button" id=7 value="Adjust Canvas" onclick="adjustCanvas(true)" style="float: right;">
+  <h2 id="h2-2" class="jello-horizontal">⚠️ Warning: This works best in desktop ! <a href="#" onclick="removeH2()">❎ Ok, Close</a></h2>
+  <br>
+  <div>
+    <div id="container1">
+      <!-- <form name="form">
+        <div>
+          <fieldset>
+            <legend>Select Device</legend>
+            <label><input type="radio" name="device" id=1 value="PC" onclick="checkCamera()" checked>PC</label>
+            <label><input type="radio" name="device" id=2 value="Mobile" onclick="checkCamera()">Mobile</label>
+          </fieldset>
+          <fieldset>
+            <legend>Select Camera</legend>
+            <label><input type="radio" name="camera" id=3 disabled onchange="flipCamera()">Front Camera</label>
+            <label><input type="radio" name="camera" id=4 disabled onchange="flipCamera()">Rear Camera</label>
+          </fieldset>
+          <br>
+          <br> 
+          <input type="button" id=5 value="Start Camera" onclick="startCamera()">
+          <input type="button" id=6 value="Stop Camera" onclick="stopCamera()">
+          <input type="button" id=7 value="Adjust/Clear Canvas" onclick="adjustCanvas(true)" style="float: right;">
+        </div>
+      </form>
+      <br> -->
+      <div class="start-stop">
+        <a href="#" id=5 onclick="startCamera()">Start Camera</a>
+        <a href="#" id=6 onclick="stopCamera()">Stop Camera</a>
+        <a href="#" id=7 onclick="adjustCanvas(true)">Adjust/Clear Canvas</a>
       </div>
-    </form> <br>
-    <div id="canvas-parent">
-      <video contrls id="videoElement" onloadeddata="adjustCanvas()"></video>
-      <canvas id="drawCanvas"></canvas>
+      <br>
+      <div id="canvas-parent">
+        <video contrls id="videoElement" onloadeddata="adjustCanvas()"></video>
+        <canvas id="drawCanvas"></canvas>
+      </div>
+      <canvas id="captureCanvas"></canvas>
     </div>
-    <canvas id="captureCanvas"></canvas>
+    <div id="container2">
+      <h4>Analysis :</h4>
+      <div id="analytics"></div>
+    </div>
   </div>
   <script src="{{ url_for('static', filename='index.js') }}"></script>
 </body>
