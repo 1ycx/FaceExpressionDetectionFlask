@@ -11,8 +11,8 @@ var drawCtx = null;
 var captureCanvas = null;
 var captureCtx = null;
 
-var timeOut1 = null;
-var timeOut2 = null;
+var timeInterval = null;
+// var timeOut2 = null;
 
 // var front = false;
 var constraints = null;
@@ -119,15 +119,12 @@ function startCamera() {
 }
 
 function iterateAnalytics() {
-  
-  // var text = "";
+
   for (var key in analytics) {
     var p = document.createElement("p");
     p.innerText = key.capitalize() + ": " + analytics[key];
     analytElem.appendChild(p);
-    // text += ("  " + key.capitalize() + ":  " + analytics[key] + "\n")
   }
-  return text;
 }
 
 function stopInterval() {
