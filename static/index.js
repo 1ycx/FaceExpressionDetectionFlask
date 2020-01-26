@@ -11,9 +11,7 @@ var captureCanvas = null;
 var captureCtx = null;
 
 var timeInterval = null;
-// var timeOut2 = null;
 
-// var front = false;
 var constraints = null;
 
 var analytics = {
@@ -27,44 +25,6 @@ var analytics = {
 }
 
 var adjustedCanvas = false;
-
-// function flipCamera() {
-//   front = !front;
-//   constraints = { video: { facingMode: (front ? "user" : "environment") }, audio: false };
-// }
-
-// function checkCamera() {
-//   if (form.device.value == "PC") {
-//     document.getElementById(3).disabled = true;
-//     document.getElementById(4).disabled = true;
-//   }
-//   else if (form.device.value == "Mobile") {
-//     // Enable the camera options
-//     document.getElementById(3).disabled = false;
-//     document.getElementById(4).disabled = false;
-
-//     // Set default to back camera
-//     document.getElementById(4).checked = true;
-//     front = false;
-//   }
-// }
-
-// function switchRadio(action) {
-//   if (action == "start") {
-//     document.getElementById(1).disabled = true;
-//     document.getElementById(2).disabled = true;
-//     document.getElementById(3).disabled = true;
-//     document.getElementById(4).disabled = true;
-//   }
-//   else if (action == "stop") {
-//     document.getElementById(1).disabled = false;
-//     document.getElementById(2).disabled = false;
-
-//     document.getElementById(1).checked = true;
-//   }
-// }
-
-
 
 function removeH2() {
   h2 = document.getElementById("h2-2");
@@ -110,8 +70,7 @@ function startCamera() {
         streamRef = stream;
         video.play();
 
-        // switchRadio("start");
-        timeInterval = setInterval(grab, 150);
+        timeInterval = setInterval(grab, 400);
       })
       .catch(function (err) {
         alert("Start Stream: Stream not started.");
@@ -130,7 +89,6 @@ function updateAnalytics() {
 
 function stopInterval() {
   clearInterval(timeInterval);
-  // clearTimeout(timeOut);
 }
 
 function stopCamera() {
@@ -147,8 +105,6 @@ function stopCamera() {
     updateAnalytics();
 
     stopInterval();
-
-    // switchRadio("stop");
 
     adjustCanvas();
   }
