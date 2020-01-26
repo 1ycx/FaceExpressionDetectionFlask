@@ -1,7 +1,6 @@
 // Note "https://webrtchacks.com/webrtc-cv-tensorflow/";
 // lt -h https://tunnel.datahub.at --port 5000
 
-var analytElem = null;
 var video = null;
 var streamRef = null;
 
@@ -65,6 +64,8 @@ var adjustedCanvas = false;
 //   }
 // }
 
+
+
 function removeH2() {
   h2 = document.getElementById("h2-2");
   h2.remove();
@@ -72,15 +73,16 @@ function removeH2() {
 
 function adjustCanvas(bool) {
 
+  // check if canvas was not already adjusted
   if (!adjustedCanvas || bool) {
     // clear canvas
     drawCanvas.width = drawCanvas.width;
 
-    drawCanvas.width = video.videoWidth;
-    drawCanvas.height = video.videoHeight;
+    drawCanvas.width = video.videoWidth || drawCanvas.width;
+    drawCanvas.height = video.videoHeight || drawCanvas.height;
     
-    captureCanvas.width = video.videoWidth;
-    captureCanvas.height = video.videoHeight;
+    captureCanvas.width = video.videoWidth || captureCanvas.width;
+    captureCanvas.height = video.videoHeight || captureCanvas.height;
 
     drawCtx.lineWidth = "5";
     drawCtx.strokeStyle = "blue";
@@ -118,13 +120,12 @@ function startCamera() {
   }
 }
 
-function iterateAnalytics() {
-
-  for (var key in analytics) {
-    var p = document.createElement("p");
-    p.innerText = key.capitalize() + ": " + analytics[key];
-    analytElem.appendChild(p);
-  }
+function updateAnalytics() {
+  let labels = ['angry', 'sad', 'happy', 'fear', 'disgust', 'surprise', 'neutral'];
+  labels.forEach( label => {
+    console.log(label);
+    document.getElementById(label).textContent = analytics[label];
+  });
 }
 
 function stopInterval() {
@@ -143,7 +144,7 @@ function stopCamera() {
     streamRef.getTracks()[0].stop();
     video.srcObject = null;
 
-    iterateAnalytics();
+    updateAnalytics();
 
     stopInterval();
 
@@ -169,8 +170,6 @@ document.onreadystatechange = () => {
 
     video = document.querySelector("#videoElement");
 
-    analytElem = document.getElementById("analytics");
-
     captureCanvas = document.getElementById("captureCanvas");
     captureCtx = captureCanvas.getContext("2d");
 
@@ -191,7 +190,6 @@ function grab() {
     video.videoWidth,
     video.videoHeight,
   );
-  console.log(captureCanvas.width, captureCanvas.height);
   captureCanvas.toBlob(upload, "image/jpeg");
 }
 

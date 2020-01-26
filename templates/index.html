@@ -7,6 +7,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet"> 
   <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+  <link rel="stylesheet" href="{{url_for('static', filename='animation.css')}}">
 
 </head>
 
@@ -43,14 +44,23 @@
       </div>
       <br>
       <div id="canvas-parent">
-        <video contrls id="videoElement" onloadeddata="adjustCanvas()"></video>
         <canvas id="drawCanvas"></canvas>
+        <video contrls id="videoElement" onloadeddata="adjustCanvas()"></video>
+        <canvas id="captureCanvas"></canvas>
       </div>
-      <canvas id="captureCanvas"></canvas>
+      
     </div>
     <div id="container2">
       <h4>Analysis :</h4>
-      <div id="analytics"></div>
+      <div id="analytics">
+        <p>Angry: <span id="angry"></span></p>
+        <p>Disgust: <span id="disgust"></span></p>
+        <p>Fear: <span id="fear"></span></p>
+        <p>Happy: <span id="happy"></span></p>
+        <p>Sad: <span id="sad"></span></p>
+        <p>Surprise: <span id="surprise"></span></p>
+        <p>Neutral: <span id="neutral"></span></p>
+      </div>
     </div>
   </div>
   <script src="{{ url_for('static', filename='index.js') }}"></script>
