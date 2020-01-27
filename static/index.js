@@ -40,7 +40,7 @@ function adjustCanvas(bool) {
 
     drawCanvas.width = video.videoWidth || drawCanvas.width;
     drawCanvas.height = video.videoHeight || drawCanvas.height;
-    
+
     captureCanvas.width = video.videoWidth || captureCanvas.width;
     captureCanvas.height = video.videoHeight || captureCanvas.height;
 
@@ -70,6 +70,8 @@ function startCamera() {
         streamRef = stream;
         video.play();
 
+        clearGraph();
+
         timeInterval = setInterval(grab, 400);
       })
       .catch(function (err) {
@@ -81,10 +83,16 @@ function startCamera() {
 
 function updateAnalytics() {
   let labels = ['angry', 'sad', 'happy', 'fear', 'disgust', 'surprise', 'neutral'];
-  labels.forEach( label => {
-    console.log(label);
+  labels.forEach(label => {
     document.getElementById(label).textContent = analytics[label];
   });
+}
+
+function clearGraph() {
+  const div = document.getElementById("graph");
+  while (div.firstChild) {
+    div.removeChild(div.firstChild);
+  }
 }
 
 function stopInterval() {
@@ -102,11 +110,13 @@ function stopCamera() {
     streamRef.getTracks()[0].stop();
     video.srcObject = null;
 
-    updateAnalytics();
-
     stopInterval();
 
     adjustCanvas();
+
+    updateAnalytics();
+
+    drawBarChart();
   }
 }
 

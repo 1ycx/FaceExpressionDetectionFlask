@@ -5,6 +5,7 @@
   <meta charset="utf-8" />
   <title>Facial Expression Detection</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://d3js.org/d3.v5.js"></script>
   <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet"> 
   <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
   <link rel="stylesheet" href="{{url_for('static', filename='animation.css')}}">
@@ -43,7 +44,18 @@
       </div>
     </div>
   </div>
+  <br>
+  <div id="graph-parent">
+    <h3>Graph :</h3>
+    <div id="graph">
+
+    </div>
+
+  </div>
+
+
   <script src="{{ url_for('static', filename='index.js') }}"></script>
+  <script src="{{ url_for('static', filename='graph.js') }}"></script>
 </body>
 
 </html>
