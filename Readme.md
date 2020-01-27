@@ -11,20 +11,20 @@
 - [x] Make sure the flask app is running properly locally.
 - [x] Write client side javascript to take frames from the video to send to the server for detection.
 - [x] Handle the server response and draw on canvas proper bounding boxes.
-- [x] Deploy the flask app online for initial testing. (Heroku, done)
+- [x] Deploy the flask app online for initial testing. (Heroku, done, working properly with automatic deployments on master)
+- [x] d3.js for visualizing a simple barchart.
+- [x] Design a Good looking UI. (Mostly completed)
 - [ ] A big no for mobile devices.
-- [ ] Maybe d3.js for visualization.
 - [ ] Find & Integrate Text Mood/Emotion Detection model.
-- [ ] Design a Good looking UI.
 - [ ] Maybe write some testcases ? IDK.
 
 
 ## Current todo:
 
-- [ ] D3.js Implementation
 - [ ] A complete div in device is mobile.
-- [ ] Container2 adjustments
-- [ ] Fix the unlimited `['files'].read error` popping up in flask
+- [x] D3.js Implementation
+- [x] Container2 adjustments
+- [x] Fix the unlimited `['files'].read error` popping up in flask
 
 
 ## Setup
