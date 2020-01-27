@@ -21,10 +21,9 @@
 
 ## Current todo:
 
-- [ ] A complete div in device is mobile.
-- [x] D3.js Implementation
-- [x] Container2 adjustments
-- [x] Fix the unlimited `['files'].read error` popping up in flask
+- [ ] Block/black screen on devices.
+- [ ] Try to fix the camera resolution in webrtc constraints.
+- [ ] Search for new problems.
 
 
 ## Setup
@@ -52,10 +51,11 @@
 
 * Create a new app.
 * Connect your github repo to the app, select a branch and enable Automatic deployments.
-* Add a buildpack to install required libraries for Open CV.
+* Install your OS Heroku CLI and login.
+* Add a buildpack to the app to install required libraries for Open CV.
 ```bash
-(env) kogam22@HOME-PC:~/code/FaceExpressionDetectionFlask$ heroku buildpacks:add --index 1 heroku-community/apt -a flask-face
-Buildpack added. Next release on flask-face will use:
+(env) kogam22@HOME-PC:~/code/FaceExpressionDetectionFlask$ heroku buildpacks:add --index 1 heroku-community/apt -a <your-app-name-here>
+Buildpack added. Next release on <your-app-name-here> will use:
 1. heroku-community/apt
 2. heroku/python
 Run git push heroku master to create a new release using these buildpacks.
