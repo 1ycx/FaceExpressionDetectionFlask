@@ -16,7 +16,7 @@
 - [x] Design a Good looking UI. (Mostly completed)
 - [ ] A big no for mobile devices.
 - [ ] Find & Integrate Text Mood/Emotion Detection model.
-- [ ] Maybe write some testcases ? IDK.
+- [ ] Write tests, move to TDD
 
 
 ## Current todo:
